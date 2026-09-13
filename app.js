@@ -1,6 +1,8 @@
 // Infinite Staring Contest vs Larry the Cat
 // Pure Webcam Camera Eye Tracking Engine
 
+const API_URL = 'https://useless-project-lpnz.onrender.com';
+
 class StaringGame {
   constructor() {
     this.state = 'IDLE';
@@ -35,6 +37,9 @@ class StaringGame {
     // Audio Engine
     this.initAudioContext();
 
+    // Check backend connection
+    this.checkBackendConnection();
+
     // Event Listeners
     this.bindEvents();
 
@@ -46,6 +51,18 @@ class StaringGame {
 
     // Auto-initialize Webcam on Load
     this.initWebcam();
+  }
+
+  async checkBackendConnection() {
+    try {
+      const response = await fetch(`${API_URL}/`, {
+        method: 'GET',
+        cache: 'no-store'
+      });
+      console.log('Backend connected:', response.status, API_URL);
+    } catch (error) {
+      console.warn('Backend not reachable:', error.message);
+    }
   }
 
   initDOMElements() {
