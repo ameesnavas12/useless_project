@@ -1,1 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infinite Staring Contest vs Larry 🐱</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Permanent+Marker&family=Press+Start+2P&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <!-- MediaPipe Face Mesh Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="game-header">
+      <h1 class="game-title">⚡ STARING CONTEST ⚡</h1>
+      <p class="game-subtitle">YOU VS. LARRY THE CAT • FIRST TO BLINK LOSES</p>
+    </header>
 
+    <!-- Main Game Workspace -->
+    <main class="game-workspace">
+
+      <!-- Timer Banner -->
+      <div class="timer-box" id="timerBox">
+        <span class="timer-label">STARE TIME</span>
+        <div class="timer-digits" id="timerDigits">00:00.00</div>
+      </div>
+
+      <div class="main-content-grid">
+        <!-- Stage 1 & Stage 2 Main Arena -->
+        <div class="arena-column">
+          <!-- Stage 1: ACTIVE STARING ARENA (Larry) -->
+          <div class="arena-card" id="staringArena">
+            <div class="cat-image-wrapper" id="larryWrapper">
+              <img src="assets/larry_staring.jpg" alt="Larry Staring" id="larryImg" class="staring-cat-img">
+              <canvas id="larryCanvas" class="cat-overlay-canvas"></canvas>
+              <div class="status-pill" id="catStatusPill">
+                <span class="status-dot"></span> LARRY IS STARING...
+              </div>
+            </div>
+
+            <!-- Action Controls -->
+            <div class="controls-bar">
+              <button id="startBtn" class="btn btn-primary btn-large">
+                <span class="btn-icon">👁️</span> START CONTEST
+              </button>
+            </div>
+          </div>
+
+          <!-- Stage 2: GAME OVER ARENA (Screaming Cat - Hidden initially) -->
+          <div class="arena-card game-over-card" id="gameOverArena" style="display: none;">
+            <div class="screaming-cat-wrapper">
+              <img src="assets/cat_screaming.jpg" alt="You Blinked Cat Screaming" id="screamingImg" class="screaming-cat-img">
+              <div class="game-over-banner" id="gameOverTitle">YOU BLINKED! YOU LOST!</div>
+            </div>
+
+            <div class="result-summary">
+              <div class="final-score-box">
+                <span class="score-caption">TIME SURVIVED</span>
+                <span class="final-time" id="finalTimeResult">0.00s</span>
+              </div>
+
+              <!-- Score Submission Form -->
+              <div class="score-input-group" id="scoreInputGroup">
+                <label for="playerNameInput">Save Your Pride to Leaderboard:</label>
+                <div class="input-row">
+                  <input type="text" id="playerNameInput" placeholder="Enter Your Name / Tag" maxlength="16">
+                  <button id="saveScoreBtn" class="btn btn-success">SAVE SCORE</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="game-over-actions">
+              <button id="retryBtn" class="btn btn-primary btn-large">
+                <span class="btn-icon">🔄</span> RE-MATCH WITH LARRY
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side Bar: Webcam & Stats + Leaderboard -->
+        <div class="side-panel">
+
+          <!-- Webcam Feed Box -->
+          <div class="panel-card webcam-card">
+            <div class="panel-header">
+              <h3>📷 WEBCAM EYE TRACKER</h3>
+              <button id="toggleCamBtn" class="btn-mini">Cam Off</button>
+            </div>
+            <div class="webcam-viewport">
+              <video id="webcam" autoplay playsinline muted></video>
+              <canvas id="webcamOverlay"></canvas>
+              <div class="cam-overlay-status" id="camStatus">
+                Camera Ready. Click Start!
+              </div>
+            </div>
+            <div class="ear-meter-container">
+              <div class="ear-info">
+                <span>Eye Openness (EAR):</span>
+                <strong id="earValueDisplay">0.00</strong>
+              </div>
+              <div class="ear-bar-bg">
+                <div class="ear-bar-fill" id="earBarFill"></div>
+              </div>
+              <div class="ear-sensitivity">
+                <label for="sensitivitySlider">Blink Sensitivity:</label>
+                <input type="range" id="sensitivitySlider" min="0.12" max="0.26" step="0.01" value="0.19">
+              </div>
+            </div>
+          </div>
+
+          <!-- Leaderboard Box -->
+          <div class="panel-card leaderboard-card">
+            <div class="panel-header">
+              <h3>🏆 HALL OF PRIDE LEADERBOARD</h3>
+              <button id="clearLeaderboardBtn" class="btn-mini btn-mini-danger">Reset</button>
+            </div>
+            <div class="leaderboard-table-wrapper">
+              <table class="leaderboard-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>PLAYER</th>
+                    <th>TIME</th>
+                    <th>OUTCOME</th>
+                  </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                  <!-- Dynamically populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="game-footer">
+      <p>Infinite Staring Contest vs Larry • Built with MediaPipe & Web Audio</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
