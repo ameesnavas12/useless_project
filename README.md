@@ -99,5 +99,50 @@ Made with ❤️ at TinkerHub Useless Projects
 ![Static Badge](https://img.shields.io/badge/TinkerHub-24?color=%23000000&link=https%3A%2F%2Fwww.tinkerhub.org%2F)
 ![Static Badge](https://img.shields.io/badge/UselessProjects--26-26?link=https%3A%2F%2Ftinkerhub.org%2Fevents%2F1M8ORET9A1%2Fuseless-projects-3.0)
 
+# Infinite Staring Contest vs Larry 🐱
+
+## Run locally
+
+```bash
+python server.py
+```
+
+Then open:
+
+```text
+http://localhost:8000
+```
+
+## Deploy live
+
+This project is a browser-based frontend app, so the easiest way to deploy it is as a static website on services like:
+- Netlify
+- Vercel
+- GitHub Pages
+- Cloudflare Pages
+
+Upload all project files including `index.html`, `style.css`, `app.js`, and the `assets/` folder.
+
+Because the app uses the webcam and MediaPipe in the browser, it should be served over HTTPS in production.
+
+## Python server deployment
+
+The included `server.py` file is already configured to work with a cloud host by:
+- binding to `0.0.0.0`
+- reading the `PORT` environment variable
+- serving the project folder as static files
+
+Example on a hosting platform:
+
+```bash
+PORT=8000 python server.py
+```
+
+## Notes
+
+- You do not need to rewrite the project to deploy it.
+- The Python file is only for serving the app.
+- The main game logic lives in the browser in `app.js`.
+
 
 
